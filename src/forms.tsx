@@ -51,7 +51,7 @@ export function useTextInput(
  * Usage:
  * ```tsx
  * const [checked, setChecked] = useCheckbox();
- * return <input type="checkbox" value={checked} onChanged={setChecked} />;
+ * return <input type="checkbox" checked={checked} onChanged={setChecked} />;
  * ```
  */
 export function useCheckbox(

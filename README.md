@@ -24,7 +24,7 @@ export default function App() {
 ```
 
 ```tsx
-const { push, pop } = useModals();
+const modals = useModals();
 return (
   <button
     onClick={function () {
@@ -55,8 +55,10 @@ return <canvas ref={matrix} />;
 ```tsx
 const [showMenu, toggleShowMenu] = useToggle();
 return (
-  <button onClick={toggleShowMenu}>Menu</button>
-  {showMenu && <Menu />}
+  <>
+    <button onClick={toggleShowMenu}>Menu</button>
+    {showMenu && <Menu />}
+  </>
 );
 ```
 
@@ -71,5 +73,5 @@ return <input type="text" value={name} onChanged={setName} />;
 
 ```tsx
 const [checked, setChecked] = useCheckbox();
-return <input type="checkbox" value={checked} onChanged={setChecked} />;
+return <input type="checkbox" checked={checked} onChanged={setChecked} />;
 ```

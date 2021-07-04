@@ -26,6 +26,10 @@ function updateSize(
   return offset;
 }
 
+function choice(chars: string): string {
+  return chars[Math.floor(Math.random() * chars.length)] as string;
+}
+
 /**
  * @param {string} [chars=田由甲申甴电甶男甸甹町画甼甽甾甿畀畁畂畃畄畅畆畇畈畉畊畋界畍畎畏畐畑] - the characters that will randomly fall
  * @param {number} [fontSize=10] - the size of the characters
@@ -37,6 +41,8 @@ function updateSize(
  * const matrixRef = useMatrix();
  * return <canvas ref={matrixRef} />;
  * ```
+ *
+ * credit: https://gist.github.com/kunaltyagi/eb8db625141b6b9d295a
  */
 export function useMatrix({
   chars = "田由甲申甴电甶男甸甹町画甼甽甾甿畀畁畂畃畄畅畆畇畈畉畊畋界畍畎畏畐畑",
@@ -73,26 +79,19 @@ export function useMatrix({
               context.fillStyle = "rgba(0, 0, 0, 0.05)";
               context.fillRect(0, 0, canvas.width, canvas.height);
               context.fillStyle = "#0F0";
-              let char: string | undefined;
-              let drop: number | undefined;
-              for (let i = 0; i < drops.length; ++i) {
-                char = chars[Math.floor(Math.random() * chars.length)];
-                drop = drops[i];
-                if (char !== undefined && drop !== undefined) {
-                  context.fillText(
-                    char,
-                    i * fontSize + offset,
-                    drop * fontSize
-                  );
-                  if (
-                    drop * fontSize > canvas.height &&
-                    Math.random() > 0.975
-                  ) {
-                    drops[i] = 0;
-                  }
-                  ++drops[i];
+              let char: string;
+              drops.forEach(function (drop, index) {
+                char = choice(chars);
+                context.fillText(
+                  char,
+                  index * fontSize + offset,
+                  drop * fontSize
+                );
+                if (drop * fontSize > canvas.height && Math.random() > 0.975) {
+                  drops[index] = 0;
                 }
-              }
+                ++drops[index];
+              });
             }, interval);
             return function () {
               window.removeEventListener("resize", resize);

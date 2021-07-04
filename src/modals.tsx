@@ -31,26 +31,17 @@ interface ModalContext {
   pop(): void;
 }
 
-const modalContext = createContext<ModalContext>({
-  push() {
-    throw new Error("used useModals outside of ModalProvider");
-  },
-  pop() {
-    throw new Error("used useModals outside of ModalProvider");
-  },
-});
+const modalContext = createContext<ModalContext | undefined>(undefined);
 
-export function ModalProvider(
-  {
-    backgroundStyle,
-    zIndex,
-    children,
-  }: {
-    backgroundStyle: ModalCSSProperties;
-    zIndex: number;
-    children: ReactNode;
-  } = { backgroundStyle: {}, zIndex: 100, children: undefined }
-): JSX.Element {
+export function ModalProvider({
+  backgroundStyle = {},
+  zIndex = 100,
+  children = undefined,
+}: {
+  backgroundStyle?: ModalCSSProperties;
+  zIndex?: number;
+  children?: ReactNode;
+} = {}): JSX.Element {
   const [modals, setModals] = useState<
     { modal: ReactNode; options: Required<Options> }[]
   >([]);
@@ -104,5 +95,9 @@ export function ModalProvider(
 }
 
 export function useModals(): ModalContext {
-  return useContext(modalContext);
+  const modals = useContext(modalContext);
+  if (modals === undefined) {
+    throw new Error("used useModals outside of ModalProvider");
+  }
+  return modals;
 }
