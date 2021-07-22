@@ -2,11 +2,14 @@ import { ChangeEvent, useCallback, useState } from "react";
 
 /**
  * Usage:
+ *
  * ```tsx
  * const [showMenu, toggleShowMenu] = useToggle();
  * return (
- *   <button onClick={toggleShowMenu}>Menu</button>
- *   {showMenu && <Menu />}
+ *   <>
+ *     <button onClick={toggleShowMenu}>Menu</button>
+ *     {showMenu && <Menu />}
+ *   </>
  * );
  * ```
  */
@@ -24,44 +27,47 @@ export function useToggle(
 
 /**
  * Usage:
+ *
  * ```tsx
- * const [name, setName] = useTextInput();
- * return <input type="text" value={name} onChanged={setName} />;
+ * const name = useTextInput();
+ * return <input type="text" {...name} />;
  * ```
  */
-export function useTextInput(
-  initialState: string | (() => string) = ""
-): [
-  string,
-  (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
-] {
-  const [state, _setState] = useState(initialState);
+export function useTextInput(initialState: string | (() => string) = ""): {
+  value: string;
+  onChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+} {
+  const [value, setValue] = useState(initialState);
 
-  const setState = useCallback(function (
+  const onChange = useCallback(function (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    _setState(event.target.value);
+    setValue(event.target.value);
   },
   []);
 
-  return [state, setState];
+  return { value, onChange };
 }
 
 /**
  * Usage:
+ *
  * ```tsx
- * const [checked, setChecked] = useCheckbox();
- * return <input type="checkbox" checked={checked} onChanged={setChecked} />;
+ * const checkbox = useCheckbox();
+ * return <input type="checkbox" {...checkbox} />;
  * ```
  */
-export function useCheckbox(
-  initialState: boolean | (() => boolean) = false
-): [boolean, (event: ChangeEvent<HTMLInputElement>) => void] {
-  const [state, _setState] = useState(initialState);
+export function useCheckbox(initialState: boolean | (() => boolean) = false): {
+  checked: boolean;
+  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+} {
+  const [checked, setChecked] = useState(initialState);
 
-  const setState = useCallback(function (event: ChangeEvent<HTMLInputElement>) {
-    _setState(event.target.checked);
+  const onChange = useCallback(function (event: ChangeEvent<HTMLInputElement>) {
+    setChecked(event.target.checked);
   }, []);
 
-  return [state, setState];
+  return { checked, onChange };
 }

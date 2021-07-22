@@ -36,12 +36,12 @@ const modalContext = createContext<ModalContext | undefined>(undefined);
 export function ModalProvider({
   backgroundStyle = {},
   zIndex = 100,
-  children = undefined,
+  children,
 }: {
   backgroundStyle?: ModalCSSProperties;
   zIndex?: number;
-  children?: ReactNode;
-} = {}): JSX.Element {
+  children: ReactNode;
+}): JSX.Element {
   const [modals, setModals] = useState<
     { modal: ReactNode; options: Required<Options> }[]
   >([]);
@@ -78,7 +78,10 @@ export function ModalProvider({
           key={index}
           style={{
             position: "absolute",
-            inset: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

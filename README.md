@@ -5,8 +5,8 @@ A personal collection of React hooks
 # Installation
 
 ```shell
+npm install @tanguymichardiere/hooks
 yarn add @tanguymichardiere/hooks
-npm i @tanguymichardiere/hooks
 ```
 
 # Usage
@@ -65,13 +65,13 @@ return (
 ## TextInput
 
 ```tsx
-const [name, setName] = useTextInput();
-return <input type="text" value={name} onChanged={setName} />;
+const name = useTextInput();
+return <input type="text" {...name} />;
 ```
 
 ## Checkbox
 
 ```tsx
-const [checked, setChecked] = useCheckbox();
-return <input type="checkbox" checked={checked} onChanged={setChecked} />;
+const checkbox = useCheckbox();
+return <input type="checkbox" {...checkbox} />;
 ```

@@ -62,42 +62,38 @@ export function useMatrix({
       const canvas = ref.current;
       if (canvas !== null) {
         const parent = canvas.parentElement;
-        if (parent !== null) {
-          const context = canvas.getContext("2d", {
-            alpha: false,
-          });
-          if (context !== null) {
-            context.font = fontSize + `px ${font}`;
-            const drops: number[] = [];
-            let offset = 0;
-            const resize = () => {
-              offset = updateSize(canvas, parent, fontSize, drops);
-            };
-            resize();
-            window.addEventListener("resize", resize);
-            const handle = setInterval(function () {
-              context.fillStyle = "rgba(0, 0, 0, 0.05)";
-              context.fillRect(0, 0, canvas.width, canvas.height);
-              context.fillStyle = "#0F0";
-              let char: string;
-              drops.forEach(function (drop, index) {
-                char = choice(chars);
-                context.fillText(
-                  char,
-                  index * fontSize + offset,
-                  drop * fontSize
-                );
-                if (drop * fontSize > canvas.height && Math.random() > 0.975) {
-                  drops[index] = 0;
-                }
-                ++drops[index];
-              });
-            }, interval);
-            return function () {
-              window.removeEventListener("resize", resize);
-              clearInterval(handle);
-            };
-          }
+        const context = canvas.getContext("2d", {
+          alpha: false,
+        });
+        if (parent !== null && context !== null) {
+          context.font = fontSize + `px ${font}`;
+          const drops: number[] = [];
+          let offset = 0;
+          const resize = () => {
+            offset = updateSize(canvas, parent, fontSize, drops);
+          };
+          resize();
+          window.addEventListener("resize", resize);
+          const handle = setInterval(function () {
+            context.fillStyle = "rgba(0, 0, 0, 0.05)";
+            context.fillRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = "#0F0";
+            for (const [index, drop] of drops.entries()) {
+              context.fillText(
+                choice(chars),
+                index * fontSize + offset,
+                drop * fontSize
+              );
+              if (drop * fontSize > canvas.height && Math.random() > 0.975) {
+                drops[index] = 0;
+              }
+              ++drops[index];
+            }
+          }, interval);
+          return function () {
+            window.removeEventListener("resize", resize);
+            clearInterval(handle);
+          };
         }
       }
       return undefined;

@@ -44,11 +44,9 @@ test("toggle with initial state", function () {
 
 test("text input", function () {
   function App() {
-    const [name, setName] = useTextInput();
+    const name = useTextInput();
 
-    return (
-      <input data-testid="input" type="text" value={name} onChange={setName} />
-    );
+    return <input data-testid="input" type="text" {...name} />;
   }
   render(<App />);
   const input = screen.getByTestId("input") as HTMLInputElement;
@@ -61,11 +59,9 @@ test("text input", function () {
 
 test("text input with initial state", function () {
   function App() {
-    const [name, setName] = useTextInput("test");
+    const name = useTextInput("test");
 
-    return (
-      <input data-testid="input" type="text" value={name} onChange={setName} />
-    );
+    return <input data-testid="input" type="text" {...name} />;
   }
   render(<App />);
   const input = screen.getByTestId("input") as HTMLInputElement;
@@ -78,16 +74,9 @@ test("text input with initial state", function () {
 
 test("checkbox", function () {
   function App() {
-    const [checked, setChecked] = useCheckbox();
+    const checkbox = useCheckbox();
 
-    return (
-      <input
-        data-testid="input"
-        type="checkbox"
-        checked={checked}
-        onChange={setChecked}
-      />
-    );
+    return <input data-testid="input" type="checkbox" {...checkbox} />;
   }
   render(<App />);
   const input = screen.getByTestId("input") as HTMLInputElement;
@@ -100,16 +89,9 @@ test("checkbox", function () {
 
 test("checkbox with initial value", function () {
   function App() {
-    const [checked, setChecked] = useCheckbox(true);
+    const checkbox = useCheckbox(true);
 
-    return (
-      <input
-        data-testid="input"
-        type="checkbox"
-        checked={checked}
-        onChange={setChecked}
-      />
-    );
+    return <input data-testid="input" type="checkbox" {...checkbox} />;
   }
   render(<App />);
   const input = screen.getByTestId("input") as HTMLInputElement;
