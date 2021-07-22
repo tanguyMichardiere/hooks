@@ -1,7 +1,7 @@
 {
   "name": "@tanguymichardiere/hooks",
   "description": "A personal collection of React hooks",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/tanguyMichardiere/hooks",
@@ -11,7 +11,7 @@
     "lint": "eslint src",
     "format": "prettier -w src",
     "build": "tsc",
-    "prepublishOnly": "yarn lint --max-warnings 0 && yarn format && yarn build",
+    "prepublishOnly": "npm run lint -- --max-warnings 0 && npm run format && npm run build",
     "test": "jest"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "@testing-library/user-event": "^13.1.9",
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.13",
+    "@types/testing-library__jest-dom": "^5.14.1",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
     "babel-jest": "^27.0.6",

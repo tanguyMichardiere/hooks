@@ -1,5 +1,8 @@
+# npm
 node_modules
+
+# compiled files
 dist
-yarn.lock
-yarn-error.log
+
+# jest artifacts
 coverage
