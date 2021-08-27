@@ -1,5 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import React from "react";
 import { ModalProvider, useModals } from "..";
 
 test("using useModals outside of ModalProvider throws", function () {
@@ -157,6 +156,6 @@ test("if `closeOnClickOutside`, modals close when clicking outside but not on th
   modalTitle.click();
   expect(modalTitle).toBeInTheDocument();
   // this currently fails because jsdom doesn't support event.currentTarget
-  // modalTitle.parentElement!.click();
+  // modalTitle.parentElement?.click();
   // expect(screen.queryByText(/^Modal$/)).not.toBeInTheDocument();
 });

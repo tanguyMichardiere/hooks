@@ -1,5 +1,5 @@
 import { act, render, screen } from "@testing-library/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useInterval } from "..";
 
 async function sleep(ms: number) {
