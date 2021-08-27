@@ -27,7 +27,10 @@ function updateSize(
 }
 
 function choice(chars: string): string {
-  return chars[Math.floor(Math.random() * chars.length)] as string;
+  // This will never return undefined if chars.length > 0
+  // This function is called many times per second so it should not check chars.length or throw
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  return chars[Math.floor(Math.random() * chars.length)]!;
 }
 
 /**
@@ -37,6 +40,7 @@ function choice(chars: string): string {
  * @param {number} [interval=33] - the interval in ms between updates of the canvas
  *
  * Usage:
+ *
  * ```tsx
  * const matrixRef = useMatrix();
  * return <canvas ref={matrixRef} />;

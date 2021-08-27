@@ -58,7 +58,7 @@ export function ModalProvider({
   []);
 
   const pop = useCallback(function () {
-    setModals((modals) => [...modals.slice(0, modals.length - 1)]);
+    setModals((modals) => modals.slice(0, modals.length - 1));
   }, []);
 
   return (

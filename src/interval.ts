@@ -5,20 +5,15 @@ import { useEffect, useRef } from "react";
  *
  * ```tsx
  * const [count, setCount] = useState(0);
- *
  * useInterval(function() {
  *   setCount((count) => count + 1);
  * }, 1000);
- *
  * return <div>{count}</div>;
  * ```
  *
  * credit: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
  */
-export function useInterval(
-  callback: () => void,
-  timeout: number | null
-): void {
+export function useInterval(callback: () => void, ms: number | null): void {
   const savedCallback = useRef<() => void>();
 
   useEffect(
@@ -30,14 +25,14 @@ export function useInterval(
 
   useEffect(
     function () {
-      if (savedCallback.current !== undefined && timeout !== null) {
-        const handle = setInterval(savedCallback.current, timeout);
+      if (savedCallback.current !== undefined && ms !== null) {
+        const handle = setInterval(savedCallback.current, ms);
         return function () {
           clearInterval(handle);
         };
       }
       return undefined;
     },
-    [timeout]
+    [ms]
   );
 }
