@@ -1,6 +1,6 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tanguyMichardiere/hooks/blob/master/LICENSE) [![npm version](https://img.shields.io/npm/v/@tanguymichardiere/hooks.svg?style=flat)](https://www.npmjs.com/package/@tanguymichardiere/hooks)
 
-A lightweight personal collection of React hooks, with only one dependency: React
+A lightweight personal collection of React hooks, with only one dependency: React.
 
 # Installation
 
@@ -13,9 +13,9 @@ yarn add @tanguymichardiere/hooks
 
 ## Modals
 
-Push and pop modals to and from the screen (like a stack)
+Push and pop modals to and from the screen (like a stack).
 
-Make sure to wrap any component that wishes to push modals (typically your entire app) in a `ModalProvider`:
+Make sure to wrap any component that will push modals (typically your entire app) in a `ModalProvider`:
 
 ```tsx
 export default function App() {
@@ -41,9 +41,29 @@ return (
 );
 ```
 
+## Storage
+
+Store persistent data with a wrapper around `useState`.
+
+```tsx
+const [auth, setAuth, authError] = useStorage<{ userName: string }>(
+  localStorage,
+  "auth"
+);
+if (authError !== undefined) {
+  return <div>Error</div>;
+} else if (auth !== null) {
+  return <App />;
+} else {
+  return <LoginPage />;
+}
+```
+
+You can use this hook multiple times with the same key, the states will be synchronized.
+
 ## Matrix
 
-Render a Matrix-like rain of green characters on a black background in a canvas
+Render a Matrix-like rain of green characters on a black background in a canvas.
 
 ```tsx
 const matrix = useMatrix();

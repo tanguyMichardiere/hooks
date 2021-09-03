@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
+    "target": "ES5",
     "lib": ["ESNext", "DOM"],
     "jsx": "react-jsx",
     "declaration": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "outDir": "dist",
+    "rootDir": "src",
     "downlevelIteration": true,
     "strict": true,
     "noUnusedLocals": true,
@@ -17,10 +18,11 @@
     "noPropertyAccessFromIndexSignature": true,
     "exactOptionalPropertyTypes": true,
     "esModuleInterop": true,
-    "inlineSourceMap": true,
+    "sourceMap": true,
+    "inlineSources": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["**/*.test.ts", "**/*.test.tsx"]
+  "exclude": ["src/test/*"]
 }

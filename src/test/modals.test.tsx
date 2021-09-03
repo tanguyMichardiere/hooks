@@ -159,3 +159,58 @@ test("if `closeOnClickOutside`, modals close when clicking outside but not on th
   // modalTitle.parentElement?.click();
   // expect(screen.queryByText(/^Modal$/)).not.toBeInTheDocument();
 });
+
+test("popAll", function () {
+  function App() {
+    const modals = useModals();
+
+    return (
+      <button
+        onClick={function () {
+          modals.push(
+            <div>
+              <h2>Modal 1</h2>
+              <button
+                onClick={function () {
+                  modals.push(
+                    <div>
+                      <h2>Modal 2</h2>
+                      <button onClick={modals.popAll}>Close all modals</button>
+                    </div>
+                  );
+                }}
+              >
+                Show modal 2
+              </button>
+              <button onClick={modals.pop}>Close modal 1</button>
+            </div>
+          );
+        }}
+      >
+        Show modal 1
+      </button>
+    );
+  }
+  render(
+    <ModalProvider>
+      <App />
+    </ModalProvider>
+  );
+  expect(screen.queryByText(/^Modal 1$/)).not.toBeInTheDocument();
+  expect(screen.queryByText(/^Modal 2$/)).not.toBeInTheDocument();
+  const showModal1Button = screen.getByText(/^Show modal 1$/);
+  expect(showModal1Button).toBeInTheDocument();
+  showModal1Button.click();
+  expect(screen.getByText(/^Modal 1$/)).toBeInTheDocument();
+  expect(screen.queryByText(/^Modal 2$/)).not.toBeInTheDocument();
+  const showModal2Button = screen.getByText(/^Show modal 2$/);
+  expect(showModal2Button).toBeInTheDocument();
+  showModal2Button.click();
+  expect(screen.getByText(/^Modal 1$/)).toBeInTheDocument();
+  expect(screen.getByText(/^Modal 2$/)).toBeInTheDocument();
+  const closeAllModalsButton = screen.getByText(/^Close all modals$/);
+  expect(closeAllModalsButton).toBeInTheDocument();
+  closeAllModalsButton.click();
+  expect(screen.queryByText(/^Modal 1$/)).not.toBeInTheDocument();
+  expect(screen.queryByText(/^Modal 2$/)).not.toBeInTheDocument();
+});

@@ -1,11 +1,5 @@
-import {
-  createContext,
-  CSSProperties,
-  ReactNode,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
+import type { CSSProperties, ReactNode } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 type ModalCSSProperties = Omit<
   CSSProperties,
@@ -27,12 +21,33 @@ interface Options {
 }
 
 interface ModalContext {
+  /**
+   * Push a component in the modals stack.
+   */
   push(modal: ReactNode, options?: Options): void;
+  /**
+   * Pop the last modal.
+   */
   pop(): void;
+  /**
+   * Pop all the modals.
+   */
+  popAll(): void;
 }
 
 const modalContext = createContext<ModalContext | undefined>(undefined);
 
+/**
+ * Context provider for {@link useModals}.
+ *
+ * Make sure to wrap any component that will push modals (typically your entire app) in a {@link ModalProvider}:
+ *
+ * ```tsx
+ * export default function App() {
+ *   return <ModalProvider><App /></ModalProvider>;
+ * }
+ * ```
+ */
 export function ModalProvider({
   backgroundStyle = {},
   zIndex = 100,
@@ -61,8 +76,12 @@ export function ModalProvider({
     setModals((modals) => modals.slice(0, modals.length - 1));
   }, []);
 
+  const popAll = useCallback(function () {
+    setModals([]);
+  }, []);
+
   return (
-    <modalContext.Provider value={{ push, pop }}>
+    <modalContext.Provider value={{ push, pop, popAll }}>
       {children}
       {modals.map(({ modal, options }, index) => (
         <div
@@ -97,6 +116,37 @@ export function ModalProvider({
   );
 }
 
+/**
+ * Push and pop modals to and from the screen (like a stack).
+ *
+ * Make sure to wrap any component that will push modals (typically your entire app) in a {@link ModalProvider}:
+ *
+ * ```tsx
+ * export default function App() {
+ *   return <ModalProvider><App /></ModalProvider>;
+ * }
+ * ```
+ *
+ * Usage:
+ *
+ * ```tsx
+ * const modals = useModals();
+ * return (
+ *   <button
+ *     onClick={function () {
+ *       modals.push(
+ *         <div>
+ *           <h2>Modal</h2>
+ *           <button onClick={modals.pop}>Close modal</button>
+ *         </div>
+ *       );
+ *     }}
+ *   >
+ *     Show modal
+ *   </button>
+ * );
+ * ```
+ */
 export function useModals(): ModalContext {
   const modals = useContext(modalContext);
   if (modals === undefined) {
