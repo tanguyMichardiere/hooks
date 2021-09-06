@@ -1,10 +1,5 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import type { Dispatch, SetStateAction } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 function parseAs<T>(text: string | null): T | null {
   return text !== null ? JSON.parse(text) : null;
@@ -109,9 +104,9 @@ export function useStorage<T = unknown>(
           }
         }
       }
-      addEventListener("storage", updateState);
+      window.addEventListener("storage", updateState);
       return function () {
-        removeEventListener("storage", updateState);
+        window.removeEventListener("storage", updateState);
       };
     },
     [storage, key]
