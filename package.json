@@ -1,18 +1,20 @@
 {
   "name": "@tanguymichardiere/hooks",
   "description": "A lightweight personal collection of React hooks",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/tanguyMichardiere/hooks",
   "author": "Tanguy Michardière",
   "license": "MIT",
   "scripts": {
+    "prepare": "husky install",
+    "check": "tsc --noEmit",
     "lint": "eslint src",
+    "test": "jest",
     "format": "prettier -w src",
     "build": "tsc",
-    "prepublishOnly": "npm run lint -- --max-warnings 0 && npm run format && npm run build",
-    "test": "jest"
+    "prepublishOnly": "npm run check && npm run lint -- --max-warnings 0 && npm test && npm run format && npm run build"
   },
   "dependencies": {
     "react": "^17.0.2"
@@ -30,11 +32,13 @@
     "@typescript-eslint/parser": "^4.30.0",
     "babel-jest": "^27.1.0",
     "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-plugin-jest": "^24.4.0",
     "eslint-plugin-react": "^7.25.1",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^3.10.2",
+    "husky": "^7.0.2",
     "jest": "^27.1.0",
     "jest-dom": "^4.0.0",
     "prettier": "^2.3.2",

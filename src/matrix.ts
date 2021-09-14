@@ -1,5 +1,4 @@
-import type { RefObject } from "react";
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 function updateSize(
   canvas: HTMLCanvasElement,
@@ -71,9 +70,11 @@ export function useMatrix({
           alpha: false,
         });
         if (parent !== null && context !== null) {
-          context.font = fontSize + `px ${font}`;
+          context.font = `${fontSize}px ${font}`;
           const drops: number[] = [];
           let offset = 0;
+          // Has to be an arrow function because function declarations are not allowed in nested blocks
+          // eslint-disable-next-line arrow-body-style
           const resize = () => {
             offset = updateSize(canvas, parent, fontSize, drops);
           };

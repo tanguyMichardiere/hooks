@@ -1,5 +1,4 @@
-import type { ChangeEvent } from "react";
-import { useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 
 /**
  * Usage:

@@ -1,5 +1,11 @@
-import type { CSSProperties, ReactNode } from "react";
-import { createContext, useCallback, useContext, useState } from "react";
+import {
+  createContext,
+  CSSProperties,
+  ReactNode,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 
 type ModalCSSProperties = Omit<
   CSSProperties,
@@ -43,7 +49,7 @@ const modalContext = createContext<ModalContext | undefined>(undefined);
  * Make sure to wrap any component that will push modals (typically your entire app) in a {@link ModalProvider}:
  *
  * ```tsx
- * export default function App() {
+ * export default function Index() {
  *   return <ModalProvider><App /></ModalProvider>;
  * }
  * ```
@@ -73,7 +79,7 @@ export function ModalProvider({
   []);
 
   const pop = useCallback(function () {
-    setModals((modals) => modals.slice(0, modals.length - 1));
+    setModals((modals) => modals.slice(0, -1));
   }, []);
 
   const popAll = useCallback(function () {

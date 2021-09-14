@@ -1,0 +1,8 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+export CI=true
+npm run check
+npm run lint -- --max-warnings 0
+npm test
+npm run format
